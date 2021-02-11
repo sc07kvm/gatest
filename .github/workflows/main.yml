@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2 
       - name: Install clang
-        run: bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - name: Version clang-format
         run: clang-format --version
       - name: Lint the code
@@ -24,8 +24,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2 
       - name: Install clang
-        run: bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"    
-      - name: Version clang-format
+        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+      - name: Version clang
         run: clang --version    
       - name: Lint the code
         run: scan-build -v make
@@ -35,8 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install clang-format
-        run: bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+      - name: Install clang
+        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - name: Build and Test code
         run: make DEBUG=1 regress
       
@@ -58,6 +58,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2  
+      - name: Install clang
+        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - name: Build code
         run: make
       - name: Upload
@@ -73,8 +75,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1
-        with:
-          vs-version: '[15.9,15.10)'
       
       - name: Cache Externals
         id: cache-externals

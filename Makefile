@@ -85,7 +85,7 @@ endif
 
 .SUFFIXES: .c .cpp
 
-all: bin/ga-test 
+all: bin/ga-test
 
 
 tmp/%.o: src/%.c src/*.h
