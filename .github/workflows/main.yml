@@ -7,36 +7,50 @@ on:
 
 jobs:
   lint_code_style:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-20.04   
     steps:
       - name: Checkout
         uses: actions/checkout@v2 
       - name: Install clang
-        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-      - name: Version clang-format
+        run: |
+          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+          sudo add-apt-repository 'deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+          apt-get install clang-format
+      - name: Version clang
         run: clang-format --version
       - name: Lint the code
-        run: clang-format --Werror --dry-run --style=LLVM ./src/*
+        run: clang-format-13 --Werror --dry-run --style=LLVM ./src/*
     
   lint_clang:
-    runs-on: ubuntu-latest   
+    runs-on: ubuntu-20.04 
     steps:
       - name: Checkout
         uses: actions/checkout@v2 
       - name: Install clang
-        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        run: |
+          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+          sudo add-apt-repository 'deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+          apt-get install clang-tools
       - name: Version clang
         run: clang --version    
       - name: Lint the code
         run: scan-build -v make
 
   test_linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install clang
-        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        run: |
+          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+          sudo add-apt-repository 'deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+          apt-get install clang
+      - name: Version clang
+        run: clang --version  
       - name: Build and Test code
         run: make DEBUG=1 regress
       
@@ -54,12 +68,10 @@ jobs:
           path: ./bin/ga-test
 
   build_linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2  
-      - name: Install clang
-        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - name: Build code
         run: make
       - name: Upload
@@ -88,8 +100,8 @@ jobs:
         run: | 
           curl -fsSL https://github.com/openssl/openssl/archive/OpenSSL_1_1_1i.zip -o OpenSSL_1_1_1i.zip
           7z x OpenSSL_1_1_1i.zip
-          mkdir .\OpenSSL_1_1_1i\x64\Release
-          cd .\OpenSSL_1_1_1i\x64\Release          
+          mkdir .\openssl-OpenSSL_1_1_1i\x64\Release
+          cd .\openssl-OpenSSL_1_1_1i\x64\Release
           perl ..\..\Configure VC-WIN64A-masm
           nmake
           xcopy ..\..\include\openssl ..\..\..\externals\x64\Release\include\openssl\
