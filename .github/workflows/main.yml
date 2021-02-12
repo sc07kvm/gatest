@@ -14,8 +14,7 @@ jobs:
       - name: Install clang
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
-          sudo add-apt-repository 'deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal main'          
+          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'        
           apt-get install clang-format
       - name: Version clang
         run: clang-format --version
@@ -31,7 +30,6 @@ jobs:
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
           sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
-          sudo add-apt-repository 'deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal main'
           apt-get install clang-tools
       - name: Version clang
         run: clang --version    
@@ -46,8 +44,7 @@ jobs:
       - name: Install clang
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
-          sudo add-apt-repository 'deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal main'          
+          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'  
           apt-get install clang
       - name: Version clang
         run: clang --version  
@@ -59,10 +56,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Fix path
-        run: xcode-select --install
-      #- name: Install OpenSSL
-      #  run: brew install openssl
       - name: Build code
         run: make
       - name: Upload
@@ -89,7 +82,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # This not work for namke
+      # This not work for nmake
       # - name: Add msbuild to PATH
       #   uses: microsoft/setup-msbuild@v1
       - name: Configure MSVC
@@ -126,7 +119,7 @@ jobs:
           curl -fsSL https://ftp.pcre.org/pub/pcre/pcre-8.44.zip -o pcre-8.44.zip
           7z x pcre-8.44.zip
           cd pcre-8.44
-          cmake . -G "Visual Studio 15 2017" -A x64 -DBUILD_SHARED_LIBS=ON
+          cmake . -A x64 -DBUILD_SHARED_LIBS=ON
           msbuild -m PCRE.sln /p:Configuration=Release /p:Platform=x64
           xcopy pcre.h ..\externals\x64\Release\include\
           xcopy Release\pcre.lib ..\externals\x64\Release\shared_lib\

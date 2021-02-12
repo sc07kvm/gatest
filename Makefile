@@ -31,8 +31,8 @@ endif
 
 # MAC OS X
 ifneq (, $(findstring darwin, $(SYS)))
-	LIBS = -lm 
-	INCLUDES = -I.
+	LIBS = -L/usr/local/opt/openssl/lib -lm -lssl -lcrypto -lpcre
+	INCLUDES = -I/usr/local/opt/openssl/include
 	FLAGS2 = 
 	INSTALL_DATA = -pm755
 endif
@@ -46,7 +46,7 @@ endif
 
 # Cygwin
 ifneq (, $(findstring cygwin, $(SYS)))
-	INCLUDES = -I.
+	INCLUDES =
 	LIBS = 
 	FLAGS2 = 
 endif
@@ -54,21 +54,21 @@ endif
 # OpenBSD
 ifneq (, $(findstring openbsd, $(SYS)))
 	LIBS = -lm -lpthread
-	INCLUDES = -I.
+	INCLUDES =
 	FLAGS2 = 
 endif
 
 # FreeBSD
 ifneq (, $(findstring freebsd, $(SYS)))
 	LIBS = -lm -lpthread
-	INCLUDES = -I.
+	INCLUDES =
 	FLAGS2 =
 endif
 
 # NetBSD
 ifneq (, $(findstring netbsd, $(SYS)))
 	LIBS = -lm -lpthread
-	INCLUDES = -I.
+	INCLUDES =
 	FLAGS2 =
 endif
 
