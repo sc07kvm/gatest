@@ -15,7 +15,7 @@ jobs:
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
           sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'        
-          apt-get install clang-format
+          sudo apt-get install clang-format
       - name: Version clang
         run: clang-format --version
       - name: Lint the code
@@ -30,7 +30,7 @@ jobs:
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
           sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
-          apt-get install clang-tools
+          sudo apt-get install clang-tools
       - name: Version clang
         run: clang --version    
       - name: Lint the code
@@ -45,7 +45,7 @@ jobs:
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
           sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'  
-          apt-get install clang
+          sudo apt-get install clang
       - name: Version clang
         run: clang --version  
       - name: Build and Test code
@@ -126,7 +126,7 @@ jobs:
           xcopy Release\pcre.dll ..\externals\x64\Release\bin\
 
       - name: Build code
-        run: msbuild .\vs17\masscan-ng.sln /property:Configuration=Release /property:Platform=x64 /m
+        run: msbuild .\vs17\ga_test.sln /property:Configuration=Release /property:Platform=x64 /m
       
       - name: Upload
         uses: actions/upload-artifact@v2
