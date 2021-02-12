@@ -74,11 +74,11 @@ endif
 
 ifeq ($(DEBUG), 1)
     DEFINES = -DDEBUG
-	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O0 -fsanitize=address
+	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -Werror -O0 -fsanitize=address
 	LDFLAGS = -fsanitize=address
 else
     DEFINES = -DNDEBUG
-	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2
+	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -Werror -O2
 	LDFLAGS = 
 endif
 

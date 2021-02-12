@@ -156,7 +156,7 @@ jobs:
         run: msbuild .\vs17\ga_test.sln /property:Configuration=${{ matrix.configuration }} /property:Platform=${{ matrix.platform }} /m
       
       - name: Selftest
-        run:
+        run: |
           xcopy .\externals\${{ matrix.platform }}\Release\bin\libssl-1_1.dll .\bin\${{ matrix.platform }}\${{ matrix.configuration }}\
           xcopy .\externals\${{ matrix.platform }}\Release\bin\libcrypto-1_1.dll .\bin\${{ matrix.platform }}\${{ matrix.configuration }}\
           xcopy .\externals\${{ matrix.platform }}\Release\bin\pcre.dll .\bin\${{ matrix.platform }}\${{ matrix.configuration }}\
