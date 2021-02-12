@@ -19,7 +19,7 @@ jobs:
       - name: Version clang
         run: clang-format --version
       - name: Lint the code
-        run: clang-format-13 --Werror --dry-run --style=LLVM ./src/*
+        run: clang-format --Werror --dry-run --style=LLVM ./src/*
     
   lint_clang:
     runs-on: ubuntu-20.04 
