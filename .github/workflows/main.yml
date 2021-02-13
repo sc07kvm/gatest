@@ -100,6 +100,12 @@ jobs:
           LLVM_PROFILE_FILE="ga-test.profraw" ./bin/ga-test --selftest
           llvm-profdata merge ga-test.profraw -o ga-test.profdata
           llvm-cov show ./bin/ga-test -instr-profile=ga-test.profdata > coverage.txt
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: |
+            coverage.txt
       - name: Execute the SonarScanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
