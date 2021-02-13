@@ -1,3 +1,1 @@
-int next() {
-  return 0;
-}
+int next() { return 0; }
