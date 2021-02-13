@@ -71,11 +71,11 @@ jobs:
       - name: Execute the SonarScanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner \
-          -Dsonar.organization=sc07kvm \
-          -Dsonar.projectKey=sc07kvm_ga_test \
-          -Dsonar.sources=.\src\ \
-          -Dsonar.cfamily.build-wrapper-output=bw-output \
+        run: sonar-scanner
+          -Dsonar.organization=sc07kvm
+          -Dsonar.projectKey=sc07kvm_ga_test
+          -Dsonar.sources=.\src\
+          -Dsonar.cfamily.build-wrapper-output=bw-output
           -Dsonar.host.url=https://sonarcloud.io
 
   test_linux:
