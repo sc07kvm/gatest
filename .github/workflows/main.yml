@@ -62,6 +62,7 @@ jobs:
         run: make DEBUG=1 regress
 
   sonarcloud:
+    name: SonarCloud
     needs: test_linux
     environment: main
     runs-on: ubuntu-20.04
@@ -122,6 +123,23 @@ jobs:
           -Dsonar.cfamily.cache.path=$HOME/.sonarcache
           -Dsonar.cfamily.cache.enabled=true
           -Dsonar.cfamily.llvm-cov.reportPath=coverage.txt
+
+  codeql:
+    name: CodeQL
+    needs: test_linux
+    environment: main
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: cpp
+      - name: Build code
+        run: make
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1      
 
   build_mac:
     needs: [lint_code_style, lint_clang, test_linux]
