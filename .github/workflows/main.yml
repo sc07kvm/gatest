@@ -72,7 +72,7 @@ jobs:
         run: sudo apt-get install llvm
       - name: Set environment for Sonar Scanner
         run: |
-          export SONAR_SCANNER_VERSION=4.4.0.2170
+          export SONAR_SCANNER_VERSION=4.5.0.2216
           export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
           export PATH=$SONAR_SCANNER_HOME/bin:$PATH
           export SONAR_SCANNER_OPTS="-server"
@@ -98,7 +98,7 @@ jobs:
       - name: Coverage
         run: |
           LLVM_PROFILE_FILE="ga-test.profraw" ./bin/ga-test --selftest
-          llvm-profdata merge ga-test.profraw -o ga-test.profdata
+          llvm-profdata merge -sparse ga-test.profraw -o ga-test.profdata
           llvm-cov show ./bin/ga-test -instr-profile=ga-test.profdata > coverage.txt
       - name: Upload
         uses: actions/upload-artifact@v2
