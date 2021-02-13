@@ -63,7 +63,7 @@ jobs:
       - name: Execute the SonarScanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: $HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux/bin/ \
+        run: $HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux/bin/sonar-scanner \
           -Dsonar.organization=sc07kvm \
           -Dsonar.projectKey=sc07kvm_ga_test \
           -Dsonar.sources=.\src\ \
@@ -194,8 +194,4 @@ jobs:
         with:
           name: ga-test_win
           path: |
-            .\externals\${{ matrix.platform }}\Release\bin\pcre.dll
-            .\externals\${{ matrix.platform }}\Release\bin\libcrypto-1_1.dll
-            .\externals\${{ matrix.platform }}\Release\bin\libssl-1_1.dll
-            .\bin\${{ matrix.platform }}\${{ matrix.configuration }}\ga-test.pdb
-            .\bin\${{ matrix.platform }}\${{ matrix.configuration }}\ga-test.exe
+            .\bin\${{ matrix.platform }}\${{ matrix.configuration }}\
