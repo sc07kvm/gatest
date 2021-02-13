@@ -43,8 +43,24 @@ jobs:
           name: analysis_result_clang
           path: ./analysis_result/*
 
-  lint_sonarcloud:
-    needs: lint_code_style
+  test_linux:
+    needs: lint_clang
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install clang
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'  
+          sudo apt-get install clang clang-tools
+      - name: Version clang
+        run: clang --version  
+      - name: Build and Test code
+        run: make DEBUG=1 regress
+
+  sonarcloud:
+    needs: test_linux
     environment: main
     runs-on: ubuntu-20.04
     steps:
@@ -52,6 +68,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Install LLVM
+        run: sudo apt-get install llvm
       - name: Set environment for Sonar Scanner
         run: |
           export SONAR_SCANNER_VERSION=4.4.0.2170
@@ -97,22 +115,6 @@ jobs:
           -Dsonar.cfamily.cache.enabled=true
           -Dsonar.cfamily.llvm-cov.reportPath=coverage.txt
 
-  test_linux:
-    needs: lint_clang
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install clang
-        run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-          sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'  
-          sudo apt-get install clang clang-tools
-      - name: Version clang
-        run: clang --version  
-      - name: Build and Test code
-        run: make DEBUG=1 regress
-      
   build_mac:
     needs: [lint_code_style, lint_clang, test_linux]
     runs-on: macos-latest
