@@ -65,12 +65,11 @@ jobs:
           echo "SONAR_SCANNER_HOME=$SONAR_SCANNER_HOME" >> $GITHUB_ENV
           echo "SONAR_SCANNER_OPTS=$SONAR_SCANNER_OPTS" >> $GITHUB_ENV
       - name: Execute the Build Wrapper
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: build-wrapper-linux-x86-64 --out-dir bw-output make
       - name: Execute the SonarScanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: sonar-scanner
           -Dsonar.organization=sc07kvm
           -Dsonar.projectKey=sc07kvm_ga_test
