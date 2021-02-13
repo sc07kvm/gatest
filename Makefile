@@ -82,6 +82,10 @@ else
 	LDFLAGS = 
 endif
 
+ifeq ($(COVERAGE), 1)
+	CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
+
 
 .SUFFIXES: .c .cpp
 
