@@ -74,8 +74,8 @@ endif
 
 ifeq ($(DEBUG), 1)
     DEFINES = -DDEBUG
-	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -Werror -O0 -fsanitize=address
-	LDFLAGS = -fsanitize=address
+	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -Werror -O0 -fsanitize=address -fsanitize=undefined
+	LDFLAGS = -fsanitize=address -fsanitize=undefined
 else
     DEFINES = -DNDEBUG
 	CFLAGS = -g $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -Werror -O2
