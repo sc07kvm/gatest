@@ -59,7 +59,7 @@ jobs:
       - name: Version clang
         run: clang --version
       - name: Which clang
-        run: shell which clang
+        run: which clang
       - name: Build and Test code
         run: make DEBUG=1 regress
 
