@@ -57,7 +57,9 @@ jobs:
           sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'  
           sudo apt-get install clang clang-tools
       - name: Version clang
-        run: clang --version  
+        run: clang --version
+      - name: Which clang
+        run: shell which clang
       - name: Build and Test code
         run: make DEBUG=1 regress
 
